@@ -1,9 +1,17 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 import logo from '../../../public/assets/icons/logo.svg';
+import { AuthContext } from '../AuthProvider/AuthProvider';
 
 const Nav = () => {
-
+    const {user,logOut} = useContext(AuthContext);
+    const handleSignOut= ()=>{
+         logOut()
+          .then()
+          .catch(error=> alert(error.message))
+    }
     const navList = (
         <>
            <li ><NavLink to="/" style={({ isActive }) => {
@@ -52,7 +60,18 @@ const Nav = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn btn-outline btn-sm btn-warning">Appointment</a>
+            {user ? (
+                    <>
+                        <button onClick={handleSignOut} className="btn  btn-sm py-2 bg border-none mr-2" to="/login">Sign Out</button>
+                        <img className="w-[40px] h-[40px] rounded-full mr-2 hover:cursor-pointer" src={user.photoURL} alt="" data-tooltip-id="my-tooltip" data-tooltip-content={user.displayName} />
+                        <Tooltip id="my-tooltip" />
+                    </>
+                ) : (
+                    <>
+                        <Link className=" px-3 py-2  text-sm bg rounded-md mr-2 text-white" to="/register">Sign Up</Link>
+                        <Link to="/login" className="px-3 py-2 clr border border-orange-600 text-sm  rounded-md">Appointment</Link>                    </>
+                )}
+                
             </div>
         </div>
     );
