@@ -68,7 +68,7 @@ const Nav = () => {
                     </>
                 ) : (
                     <>
-                        <Link className=" px-3 py-2  text-sm bg rounded-md mr-2 text-white" to="/register">Sign Up</Link>
+                        <Link className=" px-3 py-2  text-sm bg rounded-md mr-2 text-white" to="/signup">Sign Up</Link>
                         <Link to="/login" className="px-3 py-2 clr border border-orange-600 text-sm  rounded-md">Appointment</Link>                    </>
                 )}
                 

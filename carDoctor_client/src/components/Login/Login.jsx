@@ -3,12 +3,14 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import img from '../../../public/assets/images/login/login.svg'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false); 
     const [showPassword, setShowPassword] = useState(false);
     const { signInUser, signInWithGoogle,signInWithGithub } = useContext(AuthContext);
   // const [data,setData] = useState([]);
@@ -20,9 +22,7 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const pass = form.password.value;
-        if(pass.length<6){
-            alert("password must be more that 6 charecter !!")
-        }
+        
         console.log(email,pass);
         signInUser(email, pass)
             .then((userCredential) => {
@@ -43,6 +43,24 @@ const Login = () => {
                 console.log(error.message)
             });
 
+    };
+    const handleGoogleLogin = () => {
+        signInWithGoogle()
+            .then(()=>{
+                
+                    setShowModal(true);
+                    setTimeout(() => {
+                        navigate('/');
+                        setShowModal(false);
+
+                    }, 1000);
+
+                
+            })
+            .catch(error => {
+                const errMsg = error.message;
+                alert(errMsg);
+            });
     };
     return (
         <div className='flex flex-col-reverse lg:flex-row mx-4 my-2 lg:mx-24 gap-8 justify-around'>
@@ -90,14 +108,24 @@ const Login = () => {
                     >
                         Login
                     </button>
-                    <p className='text-gray-700 text-sm py-2 '>Don't have any account? please <Link className='underline text-blue-600' to="/register">register</Link> </p>
+                    <p className='text-gray-700 text-sm py-2 '>Don't have any account? please <Link className='underline text-blue-600' to="/signup">register</Link> </p>
                     <div className="text-black flex text-3xl items-center justify-center gap-2 pt-2 border-t-2 mt-6">
-                        <div onClick={signInWithGoogle} className='hover:bg-gray-200 p-2 cursor-pointer rounded-full'><FcGoogle /> </div>
+                        <div onClick={handleGoogleLogin} className='hover:bg-gray-200 p-2 cursor-pointer rounded-full'><FcGoogle /> </div>
                         <p className='text-lg font-bold'>or</p>
                         <div onclick={signInWithGithub} className='hover:bg-gray-200 p-2 cursor-pointer rounded-full'><FaGithub /></div>
                     </div>
                 </form>
             </div>
+            {showModal && (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white flex flex-col items-center justify-center p-5 md:p-12 rounded-lg shadow-lg text-black">
+                    <div className='py-2 t-clr text-5xl font-semibold'><IoMdCheckmarkCircleOutline /></div>
+                    <p className="text-2xl t-clr font-semibold mb-2">Login Successful!</p>
+                    <p className='text-sm'>You have successfully logged in!</p>
+                </div>
+            </div>
+            )}
+          
         </div>
     );
 };
