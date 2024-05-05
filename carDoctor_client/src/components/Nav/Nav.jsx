@@ -39,6 +39,11 @@ const Nav = () => {
                             color: isActive &&  'orange',
                            
                         }}}>Contact</NavLink></li>
+           <li><NavLink to="/services" style={({ isActive }) => {
+                        return {
+                            color: isActive &&  'orange',
+                           
+                        }}}>Add Services</NavLink></li>
         </>
     )
     return (

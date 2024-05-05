@@ -4,6 +4,7 @@ import Root from "../components/Root";
 import Error from "../components/ErorrPage/Error";
 import Login from "../components/Login/Login";
 import Signup from "../components/Signup/Signup";
+import AddServices from "../components/AddServices/AddServices";
 
 
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
          {
           path:"/signup",
           element:<Signup></Signup>
+         },
+         {
+          path:"/services",
+          element:<AddServices></AddServices>
          }
       ]
     },
