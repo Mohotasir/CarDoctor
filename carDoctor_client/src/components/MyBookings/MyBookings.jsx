@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import swal from 'sweetalert';
 const MyBookings = () => {
     const { user } = useContext(AuthContext);
     const [mybookData, setMybookData] = useState([]);
@@ -10,6 +11,31 @@ const MyBookings = () => {
             .then(res => res.json())
             .then(data => setMybookData(data))
     }, [])
+    const handleDelete = async (_id) => {
+        const willDelete = await swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        });
+        if (willDelete) {
+            fetch(`http://localhost:5000/booking/${_id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        swal("Your data has been deleted!", {
+                            icon: "success",
+                        });
+                        const remaining = mybookData.filter(u => u._id !== _id);
+                        setMybookData(remaining);
+                    }
+                })
+                .catch(error => console.error("Error deleting data:", error));
+        }
+    };
     return (
         <div>
             <div className="px-12 py-4 md:py-16 rounded-lg my-4 " style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, .8)), url('../../../public/assets/images/homeCarousel/slide1.webp')` }}>
@@ -32,9 +58,9 @@ const MyBookings = () => {
                             mybookData.map(data =>
                                 
                                 <tr>
-                                    <th>
-                                        <p className='text-lg font-bold btn rounded-full'><IoMdCloseCircleOutline /></p>
-                                    </th>
+                                    <td>
+                                        <button  onClick={() => handleDelete(data._id)} className='text-lg font-bold btn rounded-full'> <IoMdCloseCircleOutline /></button>
+                                    </td>
                                     <td>
                                         { data.name}
                                        <img src={data.url} alt="" />

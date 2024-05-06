@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import img from '../../../public/assets/images/login/login.svg'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 const Login = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false); 
     const [showPassword, setShowPassword] = useState(false);
@@ -30,11 +31,11 @@ const Login = () => {
                 if (user) {
                     setShowModal(true);
                     setTimeout(() => {
-                        navigate('/');
+                        navigate(location?.state ? location?.state : '/');
                         setShowModal(false);
 
                     }, 1500);
-
+                 
                 }
                 e.target.reset();
             })
@@ -50,7 +51,7 @@ const Login = () => {
                 
                     setShowModal(true);
                     setTimeout(() => {
-                        navigate('/');
+                        navigate(location?.state ? location?.state : '/');
                         setShowModal(false);
 
                     }, 1000);
