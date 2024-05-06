@@ -43,7 +43,21 @@ const Nav = () => {
                         return {
                             color: isActive &&  'orange',
                            
-                        }}}>Add Services</NavLink></li>
+                        }}}>Add Services</NavLink>
+            </li>
+             {
+                user?.email ?
+                     <li><NavLink to="/booking" style={({ isActive }) => {
+                        return {
+                            color: isActive &&  'orange',
+                           
+                        }}}>My Bookings</NavLink>
+                    </li> 
+                    :
+                    <></>
+                
+
+             }
         </>
     )
     return (

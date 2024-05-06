@@ -5,8 +5,9 @@ import Error from "../components/ErorrPage/Error";
 import Login from "../components/Login/Login";
 import Signup from "../components/Signup/Signup";
 import AddServices from "../components/AddServices/AddServices";
-
-
+import Checkout from "../components/Checkoout/Checkout";
+import MyBookings from "../components/MyBookings/MyBookings";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 const router = createBrowserRouter([
     {
       path: "/",
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
       children:[
          {
             path:"/",
-            element:<Home></Home>
+            element:<Home></Home>,
+            loader :()=>fetch('http://localhost:5000/services')
          },
          {
            path:"/login",
@@ -28,6 +30,15 @@ const router = createBrowserRouter([
          {
           path:"/services",
           element:<AddServices></AddServices>
+         },
+         {
+          path:"/checkout/:id",
+          element:<Checkout></Checkout>,
+          loader:({params})=>fetch(`http://localhost:5000/services/${params.id}`)
+         },
+         {
+          path: "/booking",
+          element:<PrivateRoute><MyBookings></MyBookings></PrivateRoute> 
          }
       ]
     },
