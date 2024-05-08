@@ -2,15 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import swal from 'sweetalert';
+import useAxios from '../../Hooks/useAxios';
 const MyBookings = () => {
     const { user } = useContext(AuthContext);
+    const axiosScequre = useAxios();    
     const [mybookData, setMybookData] = useState([]);
-    const url = `http://localhost:5000/booking?email=${user.email}`;
+    const url = `/booking?email=${user?.email}`;
     useEffect(() => {
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setMybookData(data))
-    }, [])
+        axiosScequre.get(url)
+         .then(res=>{
+            setMybookData(res.data)
+         })
+    }, [url,axiosScequre])
     const handleDelete = async (_id) => {
         const willDelete = await swal({
             title: "Are you sure?",

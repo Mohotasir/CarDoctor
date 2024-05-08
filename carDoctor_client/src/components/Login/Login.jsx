@@ -7,14 +7,15 @@ import img from '../../../public/assets/images/login/login.svg'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import axios from 'axios';
 
 const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [showModal, setShowModal] = useState(false); 
+    const [showModal, setShowModal] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const { signInUser, signInWithGoogle,signInWithGithub } = useContext(AuthContext);
-  // const [data,setData] = useState([]);
+    const { signInUser, signInWithGoogle, signInWithGithub } = useContext(AuthContext);
+    // const [data,setData] = useState([]);
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -23,19 +24,27 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const pass = form.password.value;
-        
-        console.log(email,pass);
+
+        //console.log(email,pass);
         signInUser(email, pass)
             .then((userCredential) => {
                 const user = userCredential.user;
                 if (user) {
                     setShowModal(true);
-                    setTimeout(() => {
-                        navigate(location?.state ? location?.state : '/');
-                        setShowModal(false);
+                    //----------token-------
+                    //const userAuth = { email }
+                    //axios.post('http://localhost:5000/jwt')
+                        //.then(res => {
+                            //console.log(res.data)
+                            setTimeout(() => {
+                                //if (res.data.success) {
+                                    navigate(location?.state ? location?.state : '/');
+                               // }
+                                setShowModal(false);
 
-                    }, 1500);
-                 
+                            }, 1500);
+                        //})
+
                 }
                 e.target.reset();
             })
@@ -47,16 +56,16 @@ const Login = () => {
     };
     const handleGoogleLogin = () => {
         signInWithGoogle()
-            .then(()=>{
-                
-                    setShowModal(true);
-                    setTimeout(() => {
-                        navigate(location?.state ? location?.state : '/');
-                        setShowModal(false);
+            .then(() => {
 
-                    }, 1000);
+                setShowModal(true);
+                setTimeout(() => {
+                    navigate(location?.state ? location?.state : '/');
+                    setShowModal(false);
 
-                
+                }, 1000);
+
+
             })
             .catch(error => {
                 const errMsg = error.message;
@@ -70,7 +79,7 @@ const Login = () => {
             </div>
             <div className='lg:w-1/2'>
                 <p className='text-3xl font-bold text-center my-4'>Log in</p>
-                <form  className='shadow-lg border p-12 rounded-lg' onSubmit={handleSubmit}>
+                <form className='shadow-lg border p-12 rounded-lg' onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block clr text-sm font-semibold mb-2" htmlFor="email">Email</label>
                         <input
@@ -79,8 +88,8 @@ const Login = () => {
                             id="email"
                             className="appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-cyan-700"
                             placeholder="Enter your email"
-                            
-                            
+
+
                             required
                         />
                     </div>
@@ -92,7 +101,7 @@ const Login = () => {
                             id="password"
                             className="appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:border-cyan-700 pr-10"
                             placeholder="Enter your password"
-                           
+
                             required
                         />
                         <button
@@ -119,14 +128,14 @@ const Login = () => {
             </div>
             {showModal && (
                 <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white flex flex-col items-center justify-center p-5 md:p-12 rounded-lg shadow-lg text-black">
-                    <div className='py-2 t-clr text-5xl font-semibold'><IoMdCheckmarkCircleOutline /></div>
-                    <p className="text-2xl t-clr font-semibold mb-2">Login Successful!</p>
-                    <p className='text-sm'>You have successfully logged in!</p>
+                    <div className="bg-white flex flex-col items-center justify-center p-5 md:p-12 rounded-lg shadow-lg text-black">
+                        <div className='py-2 t-clr text-5xl font-semibold'><IoMdCheckmarkCircleOutline /></div>
+                        <p className="text-2xl t-clr font-semibold mb-2">Login Successful!</p>
+                        <p className='text-sm'>You have successfully logged in!</p>
+                    </div>
                 </div>
-            </div>
             )}
-          
+
         </div>
     );
 };
