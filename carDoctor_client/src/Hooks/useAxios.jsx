@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 
 const axiosScequre = axios.create({
-    baseURL : 'http://localhost:5000',
+    baseURL : 'https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app',
     withCredentials: true
 })
 const useAxios = () => {

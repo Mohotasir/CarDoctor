@@ -1,7 +1,7 @@
 import Title from "../Title/Title";
 import CardService from "./CardService";
 const Service = ({services}) => {
-    console.log(services)
+    //console.log(services)
     return (
         <div>
             <Title 

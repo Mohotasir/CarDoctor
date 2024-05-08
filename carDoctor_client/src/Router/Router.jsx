@@ -17,7 +17,7 @@ const router = createBrowserRouter([
          {
             path:"/",
             element:<Home></Home>,
-            loader :()=>fetch('http://localhost:5000/services')
+            loader :()=>fetch('https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/services')
          },
          {
            path:"/login",
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
          {
           path:"/checkout/:id",
           element:<PrivateRoute><Checkout></Checkout></PrivateRoute>,
-          loader:({params})=>fetch(`http://localhost:5000/services/${params.id}`)
+          loader:({params})=>fetch(`https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/services/${params.id}`)
          },
          {
           path: "/booking",

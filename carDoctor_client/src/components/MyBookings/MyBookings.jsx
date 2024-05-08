@@ -23,7 +23,7 @@ const MyBookings = () => {
             dangerMode: true,
         });
         if (willDelete) {
-            fetch(`http://localhost:5000/booking/${_id}`, {
+            fetch(`https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/booking/${_id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

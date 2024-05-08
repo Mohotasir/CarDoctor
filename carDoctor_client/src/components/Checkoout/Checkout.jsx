@@ -18,8 +18,8 @@ const Checkout = () => {
         const price = form.price.value;
         const textArea = form.textarea.value;
         const formData = { fname,lname,phone,email,date,price,textArea,name }
-        console.log(formData)
-        fetch("http://localhost:5000/booking", {
+        //console.log(formData)
+        fetch("https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/booking", {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

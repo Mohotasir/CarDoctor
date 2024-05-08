@@ -30,9 +30,9 @@ const AuthProvider = ({ children }) => {
     const logOut = ()=>{
         setLoading(true)
         const loggedUser = {email:user?.email};
-        axios.post('http://localhost:5000/logout' ,loggedUser,{withCredentials :true})
+        axios.post('https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/logout' ,loggedUser,{withCredentials :true})
            .then(res=>{
-            console.log(res.data);
+           // console.log(res.data);
            })
         return signOut(auth);
     }
@@ -44,13 +44,13 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
             if(currentUser){
                 const loggedUser = {email:currentUser?.email};
-                axios.post('http://localhost:5000/jwt' ,loggedUser,{withCredentials :true})
+                axios.post('https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/jwt' ,loggedUser,{withCredentials :true})
                  .then(res=>{
                     console.log('token response:',res.data);
                  })
             }
             // }else{
-            //     axios.post('http://localhost:5000/logout' ,loggedUser,{withCredentials :true})
+            //     axios.post('https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/logout' ,loggedUser,{withCredentials :true})
             //      .then(res=>{
             //         console.log(res.data);
             //      })

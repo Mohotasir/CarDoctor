@@ -9,8 +9,8 @@ const AddServices = () => {
         const des = form.description.value;
         const price = form.price.value;
         const formData = {url,name,des,price}
-        console.log(formData)
-        fetch("http://localhost:5000/services",{
+        //console.log(formData)
+        fetch("https://car-doctor-server-12z1vgrph-tahsins-projects-aaa37910.vercel.app/services",{
             method: 'POST',
             headers: {
               'content-type':'application/json'
@@ -19,7 +19,7 @@ const AddServices = () => {
           })
           .then(res=> res.json())
           .then(data =>{
-            console.log(data)
+            //console.log(data)
             if(data.insertedId){
                 swal({
                     title: "Successfull !",
